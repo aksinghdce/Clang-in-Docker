@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+        clang:
+                build: .
+                image: ubuntu_clang:latest
+                stdin_open: true
+                entrypoint:
+                  - /bin/bash
+                volumes: 
+                  - ./FAQs:/FAQs
