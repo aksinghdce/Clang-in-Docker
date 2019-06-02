@@ -17,22 +17,26 @@ class TwoSum {
         int i=0;
         int array_size = array.size();
         map<const int, int> dictionary;
+        tuple<int, int> result;
         while(i < array_size) {
             auto search = dictionary.find(target - array[i]);
             if(search != dictionary.end()) {
-                return tuple(i, dictionary.extract(*search));
+                result = make_tuple(i, search->second);
+                return result;
             } else {
-                dictionary.emplace(array[i], i);
+                dictionary.try_emplace(array[i], i);
             }
             i += 1;
         }
-        return tuple(-1, -1);
+        result = make_tuple(-1, -1);
+        return result;
     }
 
 };
 
 int main() {
-    TwoSum twosum([1, 3, 4, 6], 9);
+    vector<int> input_array{1, 3, 4, 6};
+    TwoSum twosum(input_array, 9);
     tuple<int, int> result = twosum.get_two_index();
-    cout << result << endl;
+    cout << get<0>(result) << "," << get<1>(result) << endl;
 }
