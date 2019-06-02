@@ -35,8 +35,8 @@ class TwoSum {
 };
 
 int main() {
-    vector<int> input_array{1, 3, 4, 6};
-    TwoSum twosum(input_array, 9);
+    vector<int> input_array{1, 3, 4, 6, 8};
+    TwoSum twosum(input_array, 10);
     tuple<int, int> result = twosum.get_two_index();
     cout << get<0>(result) << "," << get<1>(result) << endl;
 }
