@@ -17,5 +17,14 @@ RUN apt-get update && apt-get install -y \
 
 RUN mkdir /FAQs/
 COPY FAQs /FAQs/
+# Install CMake and Cpp library for PyTorch
+RUN mkdir /temp/
+COPY temp /temp/
+RUN cd /temp/cmake-3.15.0-rc1/ \
+  && ./bootstrap \
+  && make -j4 \
+  && make install
+RUN mkdir /CPPyTorch/
+COPY CPPyTorch /CPPyTorch/
 # Start from a Bash prompt
 CMD [ "/bin/bash" ]
