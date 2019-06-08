@@ -36,4 +36,14 @@ int main() {
         Node* a = get<Node*>(obj.v);
         cout << "Node* value: " << a->val << endl;
     } 
+
+    double* s = new double[3];
+    s[0] = 3.14;
+    s[1] = 2.15;
+    s[2] = 4.2;
+    s[4] = 1.3; // Why did't it result into compile time error?
+    cout << "*s=" << s[4] << endl;
+    delete[] s;
+    cout << "*s=" << s[4] << endl; // Why is this still accessible?
+    
 }
