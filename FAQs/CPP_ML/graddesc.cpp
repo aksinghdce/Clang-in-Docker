@@ -9,6 +9,7 @@ class LinearRegression  {
     private:
       vector<double> X;
       vector<double> Y;
+      double a, b;
       void show_data() {
         cout << "X:" << endl;
         for(auto& x: X) {
@@ -21,7 +22,7 @@ class LinearRegression  {
         }
         cout << endl;
       }
-      tuple<double, double> get_grad(double a_, double b_) {
+      tuple<double, double> get_grad(const double a_,const double b_) {
           assert(X.size() == Y.size());
           double N = X.size();
           cout << "N:" << N << endl;
@@ -42,16 +43,20 @@ class LinearRegression  {
       tuple<double, double> train(double numIterations, double init_a, double init_b) {
           show_data();
           double alpha_ = 0.02;
-          double a_ = init_a;
-          double b_ = init_b;
+          a = init_a;
+          b = init_b;
           for(int i=0; i < numIterations; i++) {
-              tuple<double, double> grads = get_grad(a_, b_);
+              tuple<double, double> grads = get_grad(a, b);
               cout << "grad_a:" << get<0>(grads) << " grad_b:" << get<1>(grads) << endl;
-              a_ = a_ - ((alpha_ * get<0>(grads)));
-              b_ = b_ - ((alpha_ * get<1>(grads)));
+              a = a - ((alpha_ * get<0>(grads)));
+              b = b - ((alpha_ * get<1>(grads)));
           }
-          cout << "a_:" << a_ << ", b_:" << b_ << endl;
-          return make_tuple(a_, b_);
+          cout << "a:" << a << ", b:" << b << endl;
+          return make_tuple(a, b);
+      }
+
+      double regress(double x) {
+          return (x*a + b);
       }
 };
 
@@ -66,5 +71,10 @@ int main(const int argc, const char* argv[]) {
     LinearRegression lr(x, y);
     tuple<double, double> coefs = lr.train(1000, 3.2, 4.1);
     cout << get<0>(coefs) << " " << get<1>(coefs) << endl;
+    cout << lr.regress(2) << endl;
+    cout << lr.regress(4) << endl;
+    cout << lr.regress(5) << endl;
+    cout << lr.regress(14) << endl;
+    cout << lr.regress(34) << endl;
     return 0;
 }
