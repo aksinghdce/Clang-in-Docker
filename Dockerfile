@@ -1,5 +1,5 @@
 # Check http://releases.llvm.org/download.html#8.0.0 for the latest available binaries
-FROM ubuntu:18.04
+FROM ubuntu
 
 # Make sure the image is updated, install some prerequisites,
 # Download the latest version of Clang (official binary) for Ubuntu
@@ -18,9 +18,9 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir /FAQs/
 COPY FAQs /FAQs/
 # Install CMake and Cpp library for PyTorch
-RUN mkdir /temp/
-COPY temp /temp/
-RUN cd /temp/cmake-3.15.0-rc1/ \
+RUN mkdir /cmake/
+COPY cmake /cmake/
+RUN cd /cmake/cmake-3.15.0-rc1/ \
   && ./bootstrap \
   && make -j4 \
   && make install
@@ -28,4 +28,9 @@ RUN mkdir /CPPyTorch/
 COPY CPPyTorch /CPPyTorch/
 # Start from a Bash prompt
 # Install MLPack Later
+RUN echo "deb http://archive.ubuntu.com/ubuntu/ bionic main universe" >> /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get install -y mlpack-bin
+RUN apt-get install -y libmlpack-dev
+RUN apt-get install -y libboost-all-dev
 CMD [ "/bin/bash" ]
